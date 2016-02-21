@@ -1,6 +1,6 @@
-import {div, ul, li, a} from '@cycle/dom';
+import { div, ul, li, a, img } from '@cycle/dom';
 
-function Users({sources, props$}) {
+function Following({sources, props$}) {
   const followingRequest$ = props$
     .map(username => ({
       url: 'https://api.github.com/users/' + encodeURI(username) + '/following',
@@ -16,6 +16,7 @@ function Users({sources, props$}) {
       div([
         ul({className: 'search-results'}, results.map(result =>
           li({className: 'search-result'}, [
+            img({src: result.avatar_url, alt: result.login, height: "42", width: "42"}),
             a({href: result.html_url}, result.login),
           ])
         ))
@@ -28,4 +29,4 @@ function Users({sources, props$}) {
   };
 }
 
-export default Users;
+export default Following;

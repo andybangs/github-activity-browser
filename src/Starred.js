@@ -1,6 +1,6 @@
-import {div, ul, li, a} from '@cycle/dom';
+import { div, ul, li, a } from '@cycle/dom';
 
-function Repos({sources, props$}) {
+function Starred({sources, props$}) {
   const starredRequest$ = props$
     .map(username => ({
       url: 'https://api.github.com/users/' + encodeURI(username) + '/starred',
@@ -28,4 +28,4 @@ function Repos({sources, props$}) {
   };
 }
 
-export default Repos;
+export default Starred;
