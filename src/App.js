@@ -1,4 +1,4 @@
-import { div, label, input, hr, a, img } from '@cycle/dom';
+import { div, span, input, hr, a, img, p } from '@cycle/dom';
 import Following from './Following';
 import Starred from './Starred';
 
@@ -22,19 +22,66 @@ function App(sources) {
     .mergeAll()
     .map(res => res.body)
     .startWith({})
-    .map(result =>
-      div([
-        label({className: 'label'}, 'Search:'),
-        input({className: 'field', attributes: {type: 'text'}}),
-        hr(),
-        img({src: result.avatar_url, alt: result.login, height: "42", width: "42"}),
-        a({href: result.html_url}, result.login),
-        hr(),
-        following.DOM,
-        hr(),
-        starred.DOM,
+    .map(result => {
+      const avatar = result.avatar_url ?
+        img({src: result.avatar_url, alt: result.login, height: "42", width: "42"}) :
+        '';
+
+      return div({style: styles.container}, [
+        div({style: styles.header}, [
+          div({style: styles.edge},
+            input({style: styles.input,
+              className: 'field',
+              attributes: {type: 'text', placeholder: 'GitHub Username'}
+            }),
+          ),
+          span({style: styles.title}, 'Activity Browser'),
+          div({style: styles.edge}, avatar)
+        ]),
+        div({style: styles.body}, [
+          following.DOM,
+          starred.DOM,
+        ]),
       ])
-    );
+    });
+
+  const styles = {
+    container: {
+      display: 'flex',
+      flexFlow: 'column',
+      alignItems: 'stretch',
+    },
+    header: {
+      height: '10%',
+      display: 'flex',
+      flexFlow: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-around',
+      backgroundColor: '#DEDEDE',
+    },
+    body: {
+      height: '90%',
+      display: 'flex',
+      flexFlow: 'row',
+      alignItems: 'stretch',
+      justifyContent: 'space-around',
+      backgroundColor: '#F5F5F5',
+    },
+    title: {
+      textAlign: 'center',
+      fontSize: '1.5em',
+    },
+    input: {
+      padding: '3px',
+    },
+    edge: {
+      minWidth: '170px',
+      display: 'flex',
+      flexFlow: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  };
 
   return {
     DOM: vtree$,

@@ -27,15 +27,40 @@ function Following({sources, props$}) {
           return 0;
         });
 
-      return div([
-        ul({className: 'search-results'}, sortedResults.map(result =>
-          li({className: 'search-result'}, [
+      return div({}, [
+        ul({style: styles.ul}, sortedResults.map(result =>
+          li({style: styles.li}, [
             img({src: result.avatar_url, alt: result.login, height: "42", width: "42"}),
-            a({href: result.html_url}, result.login),
+            a({style: styles.a, href: result.html_url}, result.login),
           ])
         ))
       ])
     });
+
+  const styles = {
+    ul: {
+      display: 'flex',
+      flexFlow: 'row',
+      flexWrap: 'wrap',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      alignContent: 'space-around',
+      padding: '5px',
+    },
+    li: {
+      listStyle: 'none',
+      padding: '5px',
+      margin: '5px',
+      borderRadius: '2px',
+      display: 'flex',
+      alignItems: 'center',
+      backgroundColor: '#90A6C1',
+    },
+    a: {
+      textDecoration: 'none',
+      color: '#444343',
+    }
+  };
 
   return {
     DOM: vtree$,
